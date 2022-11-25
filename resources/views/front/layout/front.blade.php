@@ -50,11 +50,11 @@
                             </div>
                         </div>
                         <div class="col-lg-5 mx-auto mt-4 mt-lg-0">
-                            <form action="#">
+                            <form action="{{ route('front.pages.search') }}" method="get">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="search" class="form-control border-dark" placeholder="Search..." required>
-                                        <button class="btn btn-outline-dark"><i class="fas fa-search"></i></button>
+                                        <input type="search" name="term" class="form-control border-dark" placeholder="Search..." value="{{ request()->term }}" required>
+                                        <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
                             </form>

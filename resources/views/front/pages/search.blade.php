@@ -12,7 +12,7 @@
                     <div class="col-12 py-3">
                         <div class="row">
                             <div class="col-12 text-center text-uppercase">
-                                <h2>{{ $category->name }}</h2>
+                                <h2>Search: {{ request()->term }}</h2>
                             </div>
                         </div>
                         <div class="row">
@@ -55,7 +55,7 @@
             <!-- Category Products -->
 
             <div class="col-12">
-                {{ $products->links() }}
+                {{ $products->appends(['term'=>request()->term])->links() }}
             </div>
 
         </main>

@@ -52,12 +52,12 @@
                                     <div class="col-12 bg-white text-center h-100 product-item">
                                         <div class="row h-100">
                                             <div class="col-12 p-0 mb-3">
-                                                <a href="product.html">
+                                                <a href="{{ route('front.pages.product', $product->id) }}">
                                                     <img src="{{ url('images/'.$product->thumbnail) }}" class="img-fluid">
                                                 </a>
                                             </div>
                                             <div class="col-12 mb-3">
-                                                <a href="product.html" class="product-name">{{ $product->name }}</a>
+                                                <a href="{{ route('front.pages.product', $product->id) }}" class="product-name">{{ $product->name }}</a>
                                             </div>
                                             <div class="col-12 mb-3">
                                                 @if(!empty($product->discounted_price))
@@ -105,12 +105,12 @@
                                     <span class="new">New</span>
                                     <div class="row h-100">
                                         <div class="col-12 p-0 mb-3">
-                                            <a href="product.html">
+                                            <a href="{{ route('front.pages.product', $product->id) }}">
                                                 <img src="{{ url('images/'.$product->thumbnail) }}" class="img-fluid">
                                             </a>
                                         </div>
                                         <div class="col-12 mb-3">
-                                            <a href="product.html" class="product-name">Sony Alpha DSLR Camera</a>
+                                            <a href="{{ route('front.pages.product', $product->id) }}" class="product-name">Sony Alpha DSLR Camera</a>
                                         </div>
                                         <div class="col-12 mb-3">
                                             @if(!empty($product->discounted_price))

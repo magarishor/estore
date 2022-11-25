@@ -64,7 +64,9 @@ Route::prefix('/cms')->name('cms.')->group(function () {
 Route::name('front.')->group(function (){
 
     Route::get('/category/{category}',[PagesController::class, 'category'])->name('pages.category');
+    Route::get('/brand/{brand}',[PagesController::class, 'brand'])->name('pages.brand');
     Route::get('/product/{product}', [PagesController::class, 'product'])->name('pages.product');
+    Route::get('/search', [PagesController::class, 'search'])->name('pages.search');
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 });
