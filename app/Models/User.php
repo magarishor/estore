@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -21,6 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address'
     ];
 
     /**
@@ -41,4 +46,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected function password():Attribute
+    {
+        return Attribute::set(fn($value) => Hash::make($value));
+    }
+
+    protected function createdAt():Attribute
+    {
+        return Attribute::get(fn($value) => Carbon::parse($value)->format('j M Y h:i A') );
+    }
+
+    protected function updatedAt():Attribute
+    {
+        return Attribute::get(fn($value) => Carbon::parse($value)->format('j M Y h:i A') );
+    }
 }

@@ -20,21 +20,36 @@
                         <div class="col-auto me-auto">
                             <ul class="top-nav">
                                 <li>
-                                    <a href="tel:+123-456-7890"><i class="fa fa-phone-square me-2"></i>+123-456-7890</a>
+                                    <a href="tel:+9779849980201"><i class="fa fa-phone-square me-2"></i>+977 9849980201</a>
                                 </li>
                                 <li>
-                                    <a href="mailto:mail@ecom.com"><i class="fa fa-envelope me-2"></i>mail@ecom.com</a>
+                                    <a href="mailto:alemagarishor@gmail.com"><i class="fa fa-envelope me-2"></i>alemagarishor@gmail.com</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-auto">
                             <ul class="top-nav">
+                                @auth()
+                                   <li>
+                                       <a href="">
+                                        <i class="fa-solid fa-user me-2"></i>
+                                        {{ auth()->user()->name }}
+                                    </a>
+                                   </li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="post" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-link link-light text-decoration-none p-0">Logout</button>
+                                        </form>
+                                    </li>
+                                @else
                                 <li>
-                                    <a href="register.html"><i class="fas fa-user-edit me-2"></i>Register</a>
+                                    <a href="{{ route('register') }}"><i class="fas fa-user-edit me-2"></i>Register</a>
                                 </li>
                                 <li>
-                                    <a href="login.html"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
+                                    <a href="{{ route('login') }}"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
                                 </li>
+                                @endauth
                             </ul>
                         </div>
                     </div>
