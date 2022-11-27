@@ -31,7 +31,7 @@
                             <ul class="top-nav">
                                 @auth()
                                    <li>
-                                       <a href="">
+                                       <a href="{{ route('front.user.index') }}">
                                         <i class="fa-solid fa-user me-2"></i>
                                         {{ auth()->user()->name }}
                                     </a>
