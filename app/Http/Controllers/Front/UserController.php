@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        return view('front.user.index', compact('user'));
+        $reviews = $user->reviews()->latest()->get();
+        return view('front.user.index', compact('user', 'reviews'));
     }
 
     public function update_profile(Request $request)

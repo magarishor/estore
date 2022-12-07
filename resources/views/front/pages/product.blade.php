@@ -108,55 +108,32 @@
                                         <div class="col-sm-4 text-center">
                                             <div class="row">
                                                 <div class="col-12 average-rating">
-                                                    4.1
+                                                    {{ round($reviews->avg('rating'), 1) }}
                                                 </div>
                                                 <div class="col-12">
-                                                    of 100 reviews
+                                                    of {{ $reviews->count() }} reviews
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <ul class="rating-list mt-3">
-                                                <li>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-dark" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">45%</div>
-                                                    </div>
-                                                    <div class="rating-progress-label">
-                                                        5<i class="fas fa-star ms-1"></i>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-dark" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
-                                                    </div>
-                                                    <div class="rating-progress-label">
-                                                        4<i class="fas fa-star ms-1"></i>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-dark" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">15%</div>
-                                                    </div>
-                                                    <div class="rating-progress-label">
-                                                        3<i class="fas fa-star ms-1"></i>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-dark" role="progressbar" style="width: 7%;" aria-valuenow="7" aria-valuemin="0" aria-valuemax="100">7%</div>
-                                                    </div>
-                                                    <div class="rating-progress-label">
-                                                        2<i class="fas fa-star ms-1"></i>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-dark" role="progressbar" style="width: 3%;" aria-valuenow="3" aria-valuemin="3" aria-valuemax="100">3%</div>
-                                                    </div>
-                                                    <div class="rating-progress-label">
-                                                        1<i class="fas fa-star ms-1"></i>
-                                                    </div>
-                                                </li>
+                                                @for($i = 5; $i >= 1; $i-- )
+                                                    @php
+                                                        if($reviews->count() > 0){
+                                                            $value = round($reviews->where('rating', $i)->count()/$reviews->count() * 100, 2);
+                                                        }else{
+                                                            $value = 0;
+                                                        }
+                                                    @endphp
+                                                    <li>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-dark" role="progressbar" style="width: 45%;" aria-valuenow="{{ $value }}" aria-valuemin="0" aria-valuemax="100">{{ $value }}%</div>
+                                                        </div>
+                                                        <div class="rating-progress-label">
+                                                            {{ $i }}<i class="fas fa-star ms-1"></i>
+                                                        </div>
+                                                    </li>
+                                                @endfor
                                             </ul>
                                         </div>
                                     </div>
@@ -176,28 +153,39 @@
                                     <h4>Add Review</h4>
                                 </div>
                                 <div class="col-12">
-                                    <form>
-                                        <div class="mb-3">
-                                            <textarea class="form-control" placeholder="Give your review"></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="d-flex ratings justify-content-end flex-row-reverse">
-                                                <input type="radio" value="5" name="rating" id="rating-5"><label
-                                                    for="rating-5"></label>
-                                                <input type="radio" value="4" name="rating" id="rating-4"><label
-                                                    for="rating-4"></label>
-                                                <input type="radio" value="3" name="rating" id="rating-3"><label
-                                                    for="rating-3"></label>
-                                                <input type="radio" value="2" name="rating" id="rating-2"><label
-                                                    for="rating-2"></label>
-                                                <input type="radio" value="1" name="rating" id="rating-1" checked><label
-                                                    for="rating-1"></label>
+                                    @auth()
+                                        <form action="{{ route('front.pages.comment', $product->id) }}" method="post">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <textarea name="comment" id="comment" class="form-control" placeholder="Give your review"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex ratings justify-content-end flex-row-reverse">
+                                                    <input type="radio" value="5" name="rating" id="rating-5"><label
+                                                        for="rating-5"></label>
+                                                    <input type="radio" value="4" name="rating" id="rating-4"><label
+                                                        for="rating-4"></label>
+                                                    <input type="radio" value="3" name="rating" id="rating-3"><label
+                                                        for="rating-3"></label>
+                                                    <input type="radio" value="2" name="rating" id="rating-2"><label
+                                                        for="rating-2"></label>
+                                                    <input type="radio" value="1" name="rating" id="rating-1" checked><label
+                                                        for="rating-1"></label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-outline-dark">Add Review</button>
+                                            </div>
+                                        </form>
+                                    @else
+                                        <div class="col-12 text-justify py-2 px-3 mb-3 bg-gray">
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    Please <a href="{{ route('login') }}"> login </a> to add a review.
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <button class="btn btn-outline-dark">Add Review</button>
-                                        </div>
-                                    </form>
+                                    @endauth
                                 </div>
                             </div>
                             <!-- Add Review -->
@@ -211,62 +199,36 @@
                             <!-- Review -->
                             <div class="row">
                                 <div class="col-12">
-
-                                    <!-- Comments -->
-                                    <div class="col-12 text-justify py-2 px-3 mb-3 bg-gray">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <strong class="me-2">Steve Rogers</strong>
-                                                <small>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                </small>
+                                    @if($reviews->isNotEmpty())
+                                        @foreach($reviews as $review)
+                                            <!-- Comments -->
+                                            <div class="col-12 text-justify py-2 px-3 mb-3 bg-gray">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <strong class="me-2">{{ $review->user->name }}</strong>
+                                                        <small>
+                                                            @for($i = 1; $i<=5; $i++)
+                                                                <i class="{{ $i <= $review->rating ? 'fas' : 'far' }} fa-star"></i>
+                                                            @endfor
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-12">
+                                                       {{ $review->comment }}
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <small>
+                                                            <i class="fas fa-clock me-2"></i>{{ $review->review_time }}
+                                                        </small>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut ullamcorper quam, non congue odio.
-                                                <br>
-                                                Fusce ligula augue, faucibus sed neque non, auctor rhoncus enim. Sed nec molestie turpis. Nullam accumsan porttitor rutrum. Curabitur eleifend venenatis volutpat.
-                                                <br>
-                                                Aenean faucibus posuere vehicula.
-                                            </div>
-                                            <div class="col-12">
-                                                <small>
-                                                    <i class="fas fa-clock me-2"></i>5 hours ago
-                                                </small>
-                                            </div>
+                                            <!-- Comments -->
+                                        @endforeach
+                                    @else
+                                        <div class="col-12 text-center py-2 px-3 mb-3 bg-gray">
+                                            No review given for this product.
                                         </div>
-                                    </div>
-                                    <!-- Comments -->
-
-                                    <!-- Comments -->
-                                    <div class="col-12 text-justify py-2 px-3 mb-3 bg-gray">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <strong class="me-2">Bucky Barns</strong>
-                                                <small>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                </small>
-                                            </div>
-                                            <div class="col-12">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut ullamcorper quam, non congue odio.
-                                                <br>
-                                                Aenean faucibus posuere vehicula.
-                                            </div>
-                                            <div class="col-12">
-                                                <small>
-                                                    <i class="fas fa-clock me-2"></i>5 hours ago
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Comments -->
+                                    @endif
 
                                 </div>
                             </div>
@@ -308,7 +270,7 @@
                                                         Rs {{ number_format($similarproduct->discounted_price) }}
                                                     </span>
                                                 @endif
-                                                    <span class="product-price">
+                                                <span class="product-price">
                                                         Rs {{ number_format($similarproduct->price) }}
                                                     </span>
                                             </div>

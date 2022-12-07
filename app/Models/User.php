@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return Attribute::get(fn($value) => Carbon::parse($value)->format('j M Y h:i A') );
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

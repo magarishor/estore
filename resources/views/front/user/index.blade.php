@@ -32,7 +32,7 @@
                                 <h2>Orders</h2>
                             </div>
                             <div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
-                                <h2>Reviews</h2>
+                                @include('front.user.reviews')
                             </div>
                             <div class="tab-pane fade" id="edit-profile-tab-pane" role="tabpanel" aria-labelledby="edit-profile-tab" tabindex="0">
                                 @include('front.user.edit-profile')

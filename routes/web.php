@@ -71,6 +71,7 @@ Route::name('front.')->group(function (){
         Route::get('/user', [UserController::class, 'index'])->name('user.index');
         Route::match(['put', 'patch'], '/user/profile', [UserController::class, 'update_profile'])->name('user.profile');
         Route::match(['put', 'patch'], '/user/password', [UserController::class, 'update_password'])->name('user.password');
+        Route::post('/product/{product}/comment', [PagesController::class, 'comment'])->name('pages.comment');
     });
 
     Route::get('/category/{category}',[PagesController::class, 'category'])->name('pages.category');
