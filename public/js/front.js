@@ -3258,6 +3258,22 @@ $(function () {
   });
   setImgLarge();
   setImgSmall();
+  $('.add-to-cart').click(function () {
+    var base = $('base').attr('href');
+    var id = $(this).data('id');
+    var url = base + '/cart/' + id;
+    var token = $('meta[name=csrf_token]').attr('content');
+
+    if ($('#qty').length) {
+      url += '/' + $('#qty').val();
+    }
+
+    $.post(url, {
+      _token: token
+    }).done(function (resp) {
+      location.reload();
+    }).fail(function (resp) {});
+  });
 });
 
 function setImgLarge() {

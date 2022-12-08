@@ -1,10 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <base href="{{ url('/') }}">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf_token" content="{{ csrf_token() }}">
     <title>E-store</title>
     <link rel="stylesheet" href="{{ url('css/front.css') }}">
 </head>
@@ -78,9 +80,9 @@
                             <a href="#" class="header-item">
                                 <i class="fas fa-heart me-2"></i><span id="header-favorite">0</span>
                             </a>
-                            <a href="cart.html" class="header-item">
-                                <i class="fas fa-shopping-bag me-2"></i><span id="header-qty" class="me-3">2</span>
-                                <i class="fas fa-money-bill-wave me-2"></i><span id="header-price">$4,000</span>
+                            <a href="{{ route('front.cart.index') }}" class="header-item">
+                                <i class="fas fa-shopping-bag me-2"></i><span id="header-qty" class="me-3">{{ $total_qty }}</span>
+                                <i class="fas fa-money-bill-wave me-2"></i><span id="header-price">Rs {{ $total_amount }}</span>
                             </a>
                         </div>
                     </div>

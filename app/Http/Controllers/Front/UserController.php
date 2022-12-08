@@ -11,7 +11,8 @@ class UserController extends Controller
     public function index(){
         $user = Auth::user();
         $reviews = $user->reviews()->latest()->get();
-        return view('front.user.index', compact('user', 'reviews'));
+        $orders = $user->orders()->latest()->get();
+        return view('front.user.index', compact('user', 'reviews', 'orders'));
     }
 
     public function update_profile(Request $request)

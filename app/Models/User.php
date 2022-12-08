@@ -25,7 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'address'
+        'address',
+        'status',
     ];
 
     /**
@@ -65,5 +66,10 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

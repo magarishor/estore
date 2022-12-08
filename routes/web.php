@@ -8,6 +8,8 @@ use App\Http\Controllers\Back\PasswordController;
 use App\Http\Controllers\Back\ProductController;
 use App\Http\Controllers\Back\ProfileController;
 use App\Http\Controllers\Back\StaffsController;
+use App\Http\Controllers\Back\UsersController;
+use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\PagesController;
 use App\Http\Controllers\Front\UserController;
@@ -51,6 +53,8 @@ Route::prefix('/cms')->name('cms.')->group(function () {
             'products' => ProductController::class
         ],['except' =>['show']]);
 
+        Route::resource('/users', UsersController::class);
+
     });
 
     Route::controller(LoginController::class)->group(function () {
@@ -72,7 +76,13 @@ Route::name('front.')->group(function (){
         Route::match(['put', 'patch'], '/user/profile', [UserController::class, 'update_profile'])->name('user.profile');
         Route::match(['put', 'patch'], '/user/password', [UserController::class, 'update_password'])->name('user.password');
         Route::post('/product/{product}/comment', [PagesController::class, 'comment'])->name('pages.comment');
+        Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     });
+
+    Route::get('/cart',[CartController::class, 'index'])->name('cart.index');
+    Route::match(['PUT', 'PATCH'],'/cart/update',[CartController::class, 'update'])->name('cart.update');
+    Route::get('/cart/{product}',[CartController::class, 'destroy'])->name('cart.destroy');
+    Route::post('/cart/{product}/{qty?}', [CartController::class, 'store'])->name('cart.store');
 
     Route::get('/category/{category}',[PagesController::class, 'category'])->name('pages.category');
     Route::get('/brand/{brand}',[PagesController::class, 'brand'])->name('pages.brand');

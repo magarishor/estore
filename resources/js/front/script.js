@@ -41,6 +41,24 @@ $(function() {
     setImgLarge();
     setImgSmall();
 
+    $('.add-to-cart').click(function (){
+        let base = $('base').attr('href');
+        let id = $(this).data('id');
+        let url = base+'/cart/'+id;
+        let token = $('meta[name=csrf_token]').attr('content');
+
+        if($('#qty').length){
+            url += '/'+$('#qty').val();
+        }
+
+        $.post(url, {_token: token}).done(function (resp){
+            location.reload();
+        }).fail(function (resp){
+
+        });
+
+    });
+
 });
 
 function setImgLarge() {
