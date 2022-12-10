@@ -4,9 +4,11 @@ use App\Http\Controllers\Back\BrandsController;
 use App\Http\Controllers\Back\CategoriesController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\LoginController;
+use App\Http\Controllers\Back\OrdersController;
 use App\Http\Controllers\Back\PasswordController;
 use App\Http\Controllers\Back\ProductController;
 use App\Http\Controllers\Back\ProfileController;
+use App\Http\Controllers\Back\ReviewsController;
 use App\Http\Controllers\Back\StaffsController;
 use App\Http\Controllers\Back\UsersController;
 use App\Http\Controllers\Front\CartController;
@@ -53,7 +55,17 @@ Route::prefix('/cms')->name('cms.')->group(function () {
             'products' => ProductController::class
         ],['except' =>['show']]);
 
-        Route::resource('/users', UsersController::class);
+        Route::resource('/users', UsersController::class)->except([
+            'create', 'store', 'show'
+        ]);
+        Route::resource('/reviews', ReviewsController::class)->only([
+            'index', 'destroy'
+        ]);
+
+        Route::resource('/orders', OrdersController::class)->only([
+            'index', 'update', 'destroy'
+        ]);
+
 
     });
 

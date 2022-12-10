@@ -48,13 +48,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('cms.reviews.index') }}">
                             <i class="fa-solid fa-comments me-2"></i>
                             Reviews
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('cms.orders.index') }}">
                             <i class="fa-solid fa-money-bill me-2"></i>
                             Orders
                         </a>
